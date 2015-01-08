@@ -6,9 +6,9 @@ class Variable
     @name, @domain = name, domain
   end
 
-  def constrain(constraint)
-    raise "Input has to be a UnaryConstraint" unless constraint.is_a?(UnaryConstraint)
-    domain.delete_if {|val| constraint.inconsistent?(val) } if constraint.right_variable?(name)
+  def domain=(value)
+    raise "Domain has to be an Array!" unless value.is_a?(Array)
+    @domain = value
   end
 
   def to_s
