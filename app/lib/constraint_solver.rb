@@ -12,7 +12,8 @@ class ConstraintSolver
   def call
     @vars = solve(vars)
     raise 'No solution!' unless vars.done?
-    vars
+    fish = vars[:fish]
+    vars.select {|var| var.domain == fish }
   end
 
   private
@@ -30,5 +31,7 @@ class ConstraintSolver
   end
 
 end
+
+
 
 p ConstraintSolver.new.call

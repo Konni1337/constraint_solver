@@ -73,6 +73,10 @@ class Variables
     vars.each(&block)
   end
 
+  def select(&block)
+    vars.select(&block)
+  end
+
   def [](name)
     vars.select {|var| var.name == name}.first.domain
   end
@@ -83,7 +87,8 @@ class Variables
 
   def done?
     return false if vars.any? { |var| var.domain.length != 1}
-    vars.map(&:domain).uniq.length == vars.length
+    true
+    #vars.map(&:domain).uniq.length == vars.length
   end
 
   def not_done?

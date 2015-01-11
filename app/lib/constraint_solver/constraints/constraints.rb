@@ -16,8 +16,9 @@ class Constraints
           winfield_drinks_beer,
           norwegian_next_to_blue,
           german_smokes_rothmanns,
-          malboro_next_to_water
-      ]
+          malboro_next_to_water,
+          all_different
+      ].flatten
     end
 
     def unary_constraints
@@ -78,6 +79,91 @@ class Constraints
 
     def malboro_next_to_water
       BinaryConstraint.new(:malboro, :water, 'Proc.new { |val1, val2| (val1 + 1) == val2 || (val2 + 1) == val1 }')
+    end
+
+    def all_different
+      [
+          all_pets_different,
+          all_poeple_different,
+          all_colors_of_houses_different,
+          all_drinks_different,
+          all_cigaretts_different
+      ].flatten
+    end
+
+    def all_pets_different
+      [
+          BinaryConstraint.new(:fish, :dog, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:fish, :cat, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:fish, :bird, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:fish, :horse, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:dog, :cat, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:dog, :bird, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:dog, :horse, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:cat, :bird, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:cat, :horse, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:bird, :horse, 'Proc.new { |val1, val2| val1 != val2 }')
+      ]
+    end
+
+    def all_poeple_different
+      [
+          BinaryConstraint.new(:briton, :swede, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:briton, :dane, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:briton, :norwegian, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:briton, :german, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:swede, :dane, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:swede, :norwegian, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:swede, :german, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:dane, :norwegian, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:dane, :german, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:norwegian, :german, 'Proc.new { |val1, val2| val1 != val2 }')
+      ]
+    end
+
+    def all_colors_of_houses_different
+      [
+          BinaryConstraint.new(:red, :green, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:red, :white, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:red, :blue, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:red, :yellow, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:green, :white, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:green, :blue, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:green, :yellow, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:white, :blue, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:white, :yellow, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:blue, :yellow, 'Proc.new { |val1, val2| val1 != val2 }')
+      ]
+    end
+
+    def all_drinks_different
+      [
+          BinaryConstraint.new(:water, :milk, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:water, :tea, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:water, :coffee, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:water, :beer, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:milk, :tea, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:milk, :coffee, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:milk, :beer, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:tea, :coffee, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:tea, :beer, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:coffee, :beer, 'Proc.new { |val1, val2| val1 != val2 }')
+      ]
+    end
+
+    def all_cigaretts_different
+      [
+          BinaryConstraint.new(:malboro, :winfield, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:malboro, :pall_mall, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:malboro, :dunhill, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:malboro, :rothmanns, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:winfield, :pall_mall, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:winfield, :dunhill, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:winfield, :rothmanns, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:pall_mall, :dunhill, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:pall_mall, :rothmanns, 'Proc.new { |val1, val2| val1 != val2 }'),
+          BinaryConstraint.new(:dunhill, :rothmanns, 'Proc.new { |val1, val2| val1 != val2 }')
+      ]
     end
 
     ##### Unary Constraints #####
